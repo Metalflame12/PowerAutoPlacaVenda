@@ -32,7 +32,7 @@ public class PowerAutoPlacaVenda extends JavaPlugin {
 	public PowerConfig dreemurr;
 
 	public static final String pluginName = "PowerAutoPlacaVenda";
-	public static final String pluginVersion = "v1.0.1";
+	public static final String pluginVersion = "v1.0.2";
 
 	public static Economy econ = null;
 
