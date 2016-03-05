@@ -35,7 +35,7 @@ public class PowerAutoPlacaVenda extends JavaPlugin {
 	public static final String pluginVersion = "v1.0.1";
 
 	public static Economy econ = null;
-	
+
 	@Override
 	public void onEnable() {
 		/*
@@ -50,7 +50,7 @@ public class PowerAutoPlacaVenda extends JavaPlugin {
 		 * Configurar a Economia do Vault
 		 */
 		setupEconomy();
-		
+
 		saveDefaultConfig();
 		/*
 		 * Ativar o AsrielConfig
@@ -89,7 +89,7 @@ public class PowerAutoPlacaVenda extends JavaPlugin {
 				t.start();
 			}
 		}.runTaskTimer(this, 54000L, 54000L);
-		
+
 		if ((boolean) asriel.get("TemmieUpdater.VerificarUpdates")) {
 			new TemmieUpdater(this);
 		}
@@ -99,7 +99,7 @@ public class PowerAutoPlacaVenda extends JavaPlugin {
 	public void onDisable() {
 		save();
 	}
-	
+
 	private boolean setupEconomy() {
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			return false;
@@ -114,46 +114,54 @@ public class PowerAutoPlacaVenda extends JavaPlugin {
 
 
 	public void runSigns() {
-		ArrayList<Location> toRemove = new ArrayList<Location>();
-
-		for (Location l : signs) {
-			if (l.getBlock().getType() != Material.WALL_SIGN) {
-				toRemove.add(l);
-				continue;
-			}
-
-			Sign s = (Sign) l.getBlock().getState().getData();
-
-			org.bukkit.block.Sign sb = (org.bukkit.block.Sign) l.getBlock().getState();
-
-			BlockFace directionFacing = s.getFacing();
-
-			if (l.getBlock().getRelative(directionFacing.getOppositeFace()).getType() != Material.CHEST && l.getBlock().getRelative(directionFacing.getOppositeFace()).getType() != Material.TRAPPED_CHEST) {
-				toRemove.add(l);
-				continue;
-			}
-
-			if (!sb.getLine(0).equals(asriel.getChanged("NomeDaPlaca"))) {
-				/*
-				 * Se o nome da placa não é o que está na config, então não é uma placa de venda.
-				 */
-				toRemove.add(l);
-				continue;
-			}
-			Chest c = (Chest) l.getBlock().getRelative(directionFacing.getOppositeFace()).getState();
-
-			calculateSellingItemsFor(c, sb.getLine(1));
-		}
-
-		for (Location l : toRemove) {
-			signs.remove(l);
-		}
-
-		new BukkitRunnable() {
+		Thread t = new Thread(new Runnable() {
 			public void run() {
-				runSigns();
+				try {
+					ArrayList<Location> toRemove = new ArrayList<Location>();
+
+					for (Location l : signs) {
+						if (l.getBlock().getType() != Material.WALL_SIGN) {
+							toRemove.add(l);
+							continue;
+						}
+
+						Sign s = (Sign) l.getBlock().getState().getData();
+
+						org.bukkit.block.Sign sb = (org.bukkit.block.Sign) l.getBlock().getState();
+
+						BlockFace directionFacing = s.getFacing();
+
+						if (l.getBlock().getRelative(directionFacing.getOppositeFace()).getType() != Material.CHEST && l.getBlock().getRelative(directionFacing.getOppositeFace()).getType() != Material.TRAPPED_CHEST) {
+							toRemove.add(l);
+							continue;
+						}
+
+						if (!sb.getLine(0).equals(asriel.getChanged("NomeDaPlaca"))) {
+							/*
+							 * Se o nome da placa não é o que está na config, então não é uma placa de venda.
+							 */
+							toRemove.add(l);
+							continue;
+						}
+						Chest c = (Chest) l.getBlock().getRelative(directionFacing.getOppositeFace()).getState();
+
+						calculateSellingItemsFor(c, sb.getLine(1));
+					}
+
+					for (Location l : toRemove) {
+						signs.remove(l);
+					}
+				} catch (Exception e) {
+
+				}
+				new BukkitRunnable() {
+					public void run() {
+						runSigns();
+					}
+				}.runTaskLater(getMe(), (int) asriel.get("TempoDeVerificacao") * 20);
 			}
-		}.runTaskLater(this, (int) asriel.get("TempoDeVerificacao") * 20);
+		});
+		t.start();
 	}
 
 	public void calculateSellingItemsFor(Chest c, String player) {
@@ -198,7 +206,7 @@ public class PowerAutoPlacaVenda extends JavaPlugin {
 		dreemurr.getPlayerData().set("Placas", null);
 
 		dreemurr.getPlayerData().set("Placas", serializedLocations);
-		
+
 		dreemurr.savePlayerData();
 	}
 
