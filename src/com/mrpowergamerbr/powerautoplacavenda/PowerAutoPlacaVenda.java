@@ -189,7 +189,6 @@ public class PowerAutoPlacaVenda extends JavaPlugin {
 							c.getInventory().removeItem(is);
 						}
 						econ.depositPlayer(player, dreemurr.getValue());
-						break;
 					}
 				}
 			}
