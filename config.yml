@@ -1,0 +1,28 @@
+#
+# PowerAutoPlacaVenda - Venda Itens Automaticamente!
+#
+# Criado por MrPowerGamerBR
+#
+# Website: http://mrpowergamerbr.com/
+# SparklyPower: http://sparklypower.net/
+#
+NomeDaPlaca: "&a[VendaAuto]"
+CustoDaPlaca: 10000
+TempoDeVerificacao: 1
+ItensVendidos:
+    - "CACTUS: 10"
+    - "DIAMOND_BLOCK: 20"
+Mensagens:
+    Prefixo: "&8[&b&lPowerAutoPlaca&a&lVenda&8]&a "
+    PlacaCriada: "&aPlaca Criada!"
+    PlacaComprada: "&aPlaca Comprada! Coloque ela em um baú usando SHIFT e ganhe grana automaticamente!"
+    DinheiroInsuficiente: "&cVocê não tem dinheiro suficiente para comprar uma placa!"
+    SemPermissao: "&cSem Permissão!"
+#
+# Temmie Updater - Verificador de Atualizações
+#
+# Criado por MrPowerGamerBR
+#
+TemmieUpdater:
+    VerificarUpdates: true
+    TemmieMetrics: true

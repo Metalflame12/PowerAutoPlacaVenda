@@ -1,0 +1,11 @@
+name: PowerAutoPlacaVenda
+main: com.mrpowergamerbr.powerautoplacavenda.PowerAutoPlacaVenda
+version: 1.0.0
+softdepend: [Vault]
+commands:
+   powerautoplacavenda:
+      description: PowerAutoPlacaVenda
+      usage: /<command>
+   comprarplaca:
+      description: Comprar Placa
+      usage: /<command>
