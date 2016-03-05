@@ -118,7 +118,6 @@ public class PowerAutoPlacaVenda extends JavaPlugin {
 
 		for (Location l : signs) {
 			if (l.getBlock().getType() != Material.WALL_SIGN) {
-				System.out.println("removed 0");
 				toRemove.add(l);
 				continue;
 			}
@@ -130,7 +129,6 @@ public class PowerAutoPlacaVenda extends JavaPlugin {
 			BlockFace directionFacing = s.getFacing();
 
 			if (l.getBlock().getRelative(directionFacing.getOppositeFace()).getType() != Material.CHEST && l.getBlock().getRelative(directionFacing.getOppositeFace()).getType() != Material.TRAPPED_CHEST) {
-				System.out.println("removed 1");
 				toRemove.add(l);
 				continue;
 			}
@@ -139,7 +137,6 @@ public class PowerAutoPlacaVenda extends JavaPlugin {
 				/*
 				 * Se o nome da placa não é o que está na config, então não é uma placa de venda.
 				 */
-				System.out.println("removed 2");
 				toRemove.add(l);
 				continue;
 			}
